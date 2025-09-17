@@ -1,0 +1,87 @@
+/*
+# Second Smallest Element in Array (C++)
+
+## 📌 Overview
+This program finds the **second smallest distinct element** in an array.  
+If no such element exists (e.g., all elements are the same or the array size is < 2), the program returns `-1`.
+
+---
+
+## 🚀 Features
+- Handles positive, negative, and duplicate numbers.
+- Works in **O(n)** time with **O(1)** extra space.
+- Returns `-1` when no valid second smallest element exists.
+
+---
+
+## 🖥️ Example Run
+
+### Input
+int arr[] = {5, 2, 8, 1, 3};
+
+### Output
+Second Smallest Element: 2
+
+---
+
+## ⚡ How to Compile and Run
+g++ SecondSmallest.cpp -o secondSmallest
+./secondSmallest
+
+---
+
+## 📖 Explanation
+- Keep track of **smallest** and **second smallest** numbers.
+- Update them while iterating the array:
+  - If current element < smallest → update both smallest and second smallest.
+  - If current element > smallest but < second smallest → update second smallest.
+- If second smallest never updates, return `-1`.
+
+---
+
+## ✍️ Author
+Your Name
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int secondSmallestElement(int arr[], int n) {
+        if (n < 2) return -1;  // not enough elements
+
+        int smallest = INT_MAX;       // store smallest element
+        int secondSmallest = INT_MAX; // store second smallest element
+
+        for (int i = 0; i < n; i++) {
+            if (arr[i] < smallest) {
+                // update both smallest and second smallest
+                secondSmallest = smallest;
+                smallest = arr[i];
+            }
+            else if (arr[i] > smallest && arr[i] < secondSmallest) {
+                // update only second smallest
+                secondSmallest = arr[i];
+            }
+        }
+
+        return (secondSmallest == INT_MAX) ? -1 : secondSmallest;
+    }
+};
+
+int main() {
+    Solution s;
+
+    int arr[] = {5, 2, 8, 1, 3};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int ans = s.secondSmallestElement(arr, n);
+
+    if (ans == -1)
+        cout << "No second smallest element exists!" << endl;
+    else
+        cout << "Second Smallest Element: " << ans << endl;
+
+    return 0;
+}
